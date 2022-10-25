@@ -36,6 +36,9 @@ spec:
 {{ include "nightingale.labels" . | indent 8 }}
         component: prometheus
     spec:
+      securityContext:
+        fsGroup: 2000
+        runAsUser: 0
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -53,9 +56,6 @@ spec:
             value: Asia/Shanghai
         image: {{ .Values.prometheus.internal.image.repository }}:{{ .Values.prometheus.internal.image.tag }}
         name: prometheus
-        securityContext:
-          fsGroup: 2000
-          runAsUser: 0
         ports:
         - containerPort: 9090
 {{- if .Values.prometheus.internal.resources }}
