@@ -53,6 +53,9 @@ spec:
             value: Asia/Shanghai
         image: {{ .Values.prometheus.internal.image.repository }}:{{ .Values.prometheus.internal.image.tag }}
         name: prometheus
+        securityContext:
+          fsGroup: 2000
+          runAsUser: 0
         ports:
         - containerPort: 9090
 {{- if .Values.prometheus.internal.resources }}
